@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  
+<!-- Mirrored from getbootstrap.com/docs/4.0/examples/pricing/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 07 Jun 2018 02:04:13 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+
+    <title>AngularJS CRUD</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+   
+	
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+   
+    <!-- Material Design Bootstrap -->
+    <link href="css/lazy.min.css" rel="stylesheet">
+    <script src="js/angular.min.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
+	 <link href="css/pricing.css" rel="stylesheet">
+  </head>
+
+<body ng-app="crudapp" >
+
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+      <h5 class="my-0 mr-md-auto font-weight-normal">AngularJS CRUD</h5>
+      <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="#">Features</a>
+        <a class="p-2 text-dark" href="#">Enterprise</a>
+        <a class="p-2 text-dark" href="#">Support</a>
+        <a class="p-2 text-dark" href="#">Pricing</a>
+      </nav>
+      <a href="https://github.com/LazyBruceWayne"  class="btn btn-primary waves-effect waves-light" target="_blank"><i class="fa fa-github" aria-hidden="true"></i> Github</a>
+    </div>
+
+    
+     <div class="container" ng-controller="AppController">
+       <br>
+        <form name="form1" novalidate>
+            <div class="input-field col-md-12">
+                <input name="name" type="text" placeholder="Name" ng-model="name" required class="validate">
+                <span ng-show="form1.$submitted && form1.name.$error.required" class="text-danger">Name required!</span>
+            </div>
+            <div class="input-field col-md-12">
+                <input name="email" type="email" placeholder="Email" ng-model="email" required class="validate">
+                <span ng-show="form1.$submitted && form1.email.$error.required" class="text-danger">Email required!</span>
+            </div>
+            <div class="input-field col-md-12">
+                <input name="password" type="password" placeholder="Password" ng-model="password" required class="validate">
+                <span ng-show="form1.$submitted && form1.password.$error.required" class="text-danger">Password required!</span>
+            </div>
+            <button ng-click="form1.$valid && AddIt();" ng-if="addbtn" class="btn btn-primary waves-effect waves-light"><i class="fa fa-plus"></i> Add</button>
+            <button ng-click="form1.$valid && form1.$dirty && UpdateIt();" ng-if="updatebtn" class="btn btn-success waves-effect waves-light"><i class="fa fa-check"></i> Update</button>
+			
+        </form>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <h4 class="text-center">Details</h4>
+                <table class="table table-hover .table-condensed .table-striped table-bordered" id="table">
+                    <thead class="alert-warning" style="    background-color: #4285f4;color:white;">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th width="17%">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-init="ReadIt();">
+                        <tr ng-repeat="item in items">
+                            <td>{{item.name}}</td>
+                            <td>{{item.email}}</td>
+                            <td>{{item.password}}</td>
+                            <td>
+                                <button ng-click="EditIt(item.id, item.name, item.email, item.password);" class="btn btn-sm btn-info waves-effect waves-light"><i class="fa fa-pencil"></i></button>
+                                <button ng-click="DeleteIt(item.id);" class="btn btn-sm btn-danger waves-effect waves-light"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+      <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-12 col-md">
+            <img class="mb-2" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
+            <small class="d-block mb-3 text-muted">&copy; 2017-2018</small>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Features</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="#">Cool stuff</a></li>
+              <li><a class="text-muted" href="#">Random feature</a></li>
+              <li><a class="text-muted" href="#">Team feature</a></li>
+              <li><a class="text-muted" href="#">Stuff for developers</a></li>
+              <li><a class="text-muted" href="#">Another one</a></li>
+              <li><a class="text-muted" href="#">Last time</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Resources</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="#">Resource</a></li>
+              <li><a class="text-muted" href="#">Resource name</a></li>
+              <li><a class="text-muted" href="#">Another resource</a></li>
+              <li><a class="text-muted" href="#">Final resource</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md">
+            <h5>About</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="#">Team</a></li>
+              <li><a class="text-muted" href="#">Locations</a></li>
+              <li><a class="text-muted" href="#">Privacy</a></li>
+              <li><a class="text-muted" href="#">Terms</a></li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+	
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="src=" https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js "></script>
+    <!-- Material Design Bootstrap -->
+    <script src="js/lazy.min.js "></script>
+    <script src="jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="popper.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="holder.min.js"></script>
+    <script>
+      Holder.addTheme('thumb', {
+        bg: '#55595c',
+        fg: '#eceeef',
+        text: 'Thumbnail'
+      });
+    </script>
+  </body>
+
+<!-- Mirrored from getbootstrap.com/docs/4.0/examples/pricing/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 07 Jun 2018 02:04:18 GMT -->
+</html>
